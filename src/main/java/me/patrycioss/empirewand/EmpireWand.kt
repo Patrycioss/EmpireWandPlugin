@@ -10,16 +10,12 @@ class EmpireWand : JavaPlugin()
          */
         @JvmField
         var range : Int = 20
-        private lateinit var empireWandListener : EmpireWandListener;
-    }
-
-    init
-    {
+        private lateinit var empireWandListener : EmpireWandListener
     }
 
     override fun onEnable()
     {
-        Companion.empireWandListener = EmpireWandListener(this)
+        empireWandListener = EmpireWandListener(this)
 
         //Commands
         getCommand("setrange")?.setExecutor(EmpireWandSetRange())
@@ -32,11 +28,6 @@ class EmpireWand : JavaPlugin()
     {
         logger.info("Goodbye cruel world! *dramatic noises*")
     }
-
-
-
-
-
 }
 
 

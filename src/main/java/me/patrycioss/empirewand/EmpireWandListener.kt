@@ -1,63 +1,46 @@
 package me.patrycioss.empirewand
 
-import net.kyori.adventure.text.Component
+import me.patrycioss.empirewand.abilities.Explosion
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.Server
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerJoinEvent
 import java.util.logging.Logger
 
 
 class EmpireWandListener(empireWand: EmpireWand) : Listener
 {
     private val logger : Logger = Bukkit.getLogger()
-    private val server : Server = Bukkit.getServer()
 
     init
     {
         empireWand.server.pluginManager.registerEvents(this, empireWand)
 
-        logger.info("I have been constructed!")
-    }
-
-
-    @EventHandler
-    fun onLogin(playerJoinEvent: PlayerJoinEvent)
-    {
-        server.broadcast(Component.text(playerJoinEvent.player.name + " has joined the game!"))
+        logger.info("The auditor of this wand has been initialized!")
     }
 
     @EventHandler
     fun onUseWand(playerInteractEvent: PlayerInteractEvent)
     {
-        logger.info(playerInteractEvent.eventName)
-
-        if (playerInteractEvent.hasItem())
+        when (playerInteractEvent.action)
         {
-            if (playerInteractEvent.item!!.type == Material.BLAZE_ROD)
+            Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK ->
             {
-                val player : Player = playerInteractEvent.player
-
-                //Makes sure there is always an explosion even if the closest block is an air block
-                when (val closestBlock = player.getTargetBlock(EmpireWand.range))
+                if (playerInteractEvent.hasItem())
                 {
-                    null ->
+                    when (playerInteractEvent.item!!.type)
                     {
-                        player.world.createExplosion(
-                            //Current position + direction * range
-                            player.location.add(player.location.direction.multiply(EmpireWand.range))
-                            , 5f, false)
+                        Material.BLAZE_ROD -> Explosion(playerInteractEvent).activate()
+
+                        else -> {}
                     }
 
-                    else -> player.world.createExplosion(closestBlock.location, 5f, false)
                 }
-
-                player.sendMessage("BOOOOOM!")
             }
+
+            else -> {}
         }
     }
 }
