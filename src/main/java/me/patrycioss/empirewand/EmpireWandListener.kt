@@ -1,6 +1,6 @@
 package me.patrycioss.empirewand
 
-import me.patrycioss.empirewand.abilities.Explosion
+import me.patrycioss.empirewand.abilities.AbilityManager
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -18,29 +18,29 @@ class EmpireWandListener(empireWand: EmpireWand) : Listener
     {
         empireWand.server.pluginManager.registerEvents(this, empireWand)
 
-        logger.info("The auditor of this wand has been initialized!")
+        logger.info("[EmpireWand] The auditor of this wand has been initialized!")
     }
 
     @EventHandler
     fun onUseWand(playerInteractEvent: PlayerInteractEvent)
     {
-        when (playerInteractEvent.action)
+        if (playerInteractEvent.hasItem() && playerInteractEvent.item!!.type == Material.BLAZE_ROD)
         {
-            Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK ->
+            when (playerInteractEvent.action)
             {
-                if (playerInteractEvent.hasItem())
+                Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK ->
+                    AbilityManager.currentAbility.activate(playerInteractEvent)
+
+
+                Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK ->
                 {
-                    when (playerInteractEvent.item!!.type)
-                    {
-                        Material.BLAZE_ROD -> Explosion(playerInteractEvent).activate()
-
-                        else -> {}
-                    }
-
+                    AbilityManager.nextAbility()
                 }
-            }
 
-            else -> {}
+                else -> {}
+            }
         }
+
+
     }
 }

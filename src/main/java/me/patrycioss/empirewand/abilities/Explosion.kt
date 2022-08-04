@@ -4,9 +4,9 @@ import me.patrycioss.empirewand.EmpireWand
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEvent
 
-class Explosion constructor(private val playerInteractEvent: PlayerInteractEvent) : Ability
+class Explosion : Ability
 {
-    override fun activate()
+    override fun activate(playerInteractEvent : PlayerInteractEvent)
     {
         val player : Player = playerInteractEvent.player
 
