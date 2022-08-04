@@ -7,4 +7,4 @@ api-version: 1.19
 commands:
   setrange:
     description: Set the range of your wand
-    usage: /setrange <range: number>
+    usage: /setrange <number>
