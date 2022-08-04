@@ -29,12 +29,12 @@ class EmpireWandListener(empireWand: EmpireWand) : Listener
             when (playerInteractEvent.action)
             {
                 Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK ->
-                    AbilityManager.currentAbility.activate(playerInteractEvent)
+                    AbilityManager.getCurrentAbility(playerInteractEvent).activate(playerInteractEvent)
 
 
                 Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK ->
                 {
-                    AbilityManager.nextAbility()
+                    AbilityManager.nextAbility(playerInteractEvent)
                 }
 
                 else -> {}
