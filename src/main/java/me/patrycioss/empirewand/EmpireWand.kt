@@ -1,9 +1,6 @@
 package me.patrycioss.empirewand
 
-import org.bukkit.Bukkit
-import org.bukkit.World
 import org.bukkit.plugin.java.JavaPlugin
-import java.lang.Exception
 
 class EmpireWand : JavaPlugin()
 {
@@ -13,21 +10,16 @@ class EmpireWand : JavaPlugin()
          */
         @JvmField
         var range : Int = 20
-
-        @JvmField
-        var world : World? = Bukkit.getServer().getWorld("world")
+        private lateinit var empireWandListener : EmpireWandListener;
     }
-
-    private lateinit var empireWandListener : EmpireWandListener;
 
     init
     {
-        if (world == null) throw Exception("Couldn't find current world :/")
     }
 
     override fun onEnable()
     {
-        empireWandListener = EmpireWandListener(this)
+        Companion.empireWandListener = EmpireWandListener(this)
 
         //Commands
         getCommand("setrange")?.setExecutor(EmpireWandSetRange())

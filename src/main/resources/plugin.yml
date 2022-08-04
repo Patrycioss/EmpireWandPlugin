@@ -1,10 +1,22 @@
 name: EmpireWand
 author: Patrycioss
-
+website: https://github.com/Patrycioss/EmpireWandPlugin
 version: '${project.version}'
 main: me.patrycioss.empirewand.EmpireWand
 api-version: 1.19
 commands:
   setrange:
+    aliases: setwandrange
     description: Set the range of your wand
-    usage: /setrange <number>
+    usage: "Usage: /<setrange> [value]"
+
+permissions:
+  EmpireWand.setrange:
+    description: Allows setrange command
+    default: not op
+
+  test.*:
+    description: Wildcard permission
+    default: op
+    children:
+      test.foo: true
