@@ -1,0 +1,10 @@
+name: EmpireWand
+author: Patrycioss
+
+version: '${project.version}'
+main: me.patrycioss.empirewand.EmpireWand
+api-version: 1.19
+commands:
+  setrange:
+    description: Set the range of your wand
+    usage: /setrange <range: number>
