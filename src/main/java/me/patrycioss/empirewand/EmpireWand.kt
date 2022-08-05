@@ -1,5 +1,7 @@
 package me.patrycioss.empirewand
 
+import me.patrycioss.empirewand.commands.SetExplosionPower
+import me.patrycioss.empirewand.commands.SetRange
 import org.bukkit.plugin.java.JavaPlugin
 
 class EmpireWand : JavaPlugin()
@@ -10,6 +12,8 @@ class EmpireWand : JavaPlugin()
          */
         @JvmField
         var range : Int = 20
+        var explosionPower : Float = 4.0f
+
         private lateinit var empireWandListener : EmpireWandListener
     }
 
@@ -18,8 +22,8 @@ class EmpireWand : JavaPlugin()
         empireWandListener = EmpireWandListener(this)
 
         //Commands
-        getCommand("setrange")?.setExecutor(EmpireWandSetRange())
-
+        getCommand("setrange")?.setExecutor(SetRange())
+        getCommand("setexplosionpower")?.setExecutor(SetExplosionPower())
 
         logger.info("PK empire!")
     }

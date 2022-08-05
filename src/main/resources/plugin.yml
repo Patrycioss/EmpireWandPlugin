@@ -6,17 +6,25 @@ main: me.patrycioss.empirewand.EmpireWand
 api-version: 1.19
 commands:
   setrange:
-    aliases: setwandrange
     description: Set the range of your wand
     usage: "Usage: /<setrange> [value]"
+
+  setexplosionpower:
+    description: Set the power of explosions caused by the wand
+    usage: "Usage: /<setexplosionpower> [value]"
 
 permissions:
   EmpireWand.setrange:
     description: Allows setrange command
     default: not op
 
+  EmpireWand.setexplosionpower:
+    description: Allows setexplosionpower command
+    default: op
+
   test.*:
     description: Wildcard permission
     default: op
     children:
-      test.foo: true
+      EmpireWand.setrange: true
+      EmpireWand.setexplosionpower: true

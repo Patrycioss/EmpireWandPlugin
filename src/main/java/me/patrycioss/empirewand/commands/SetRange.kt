@@ -1,5 +1,6 @@
-package me.patrycioss.empirewand
+package me.patrycioss.empirewand.commands
 
+import me.patrycioss.empirewand.EmpireWand
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -9,7 +10,7 @@ import org.bukkit.entity.Player
 /**
  * Command to set the range of the users' empire wand
  */
-class EmpireWandSetRange : CommandExecutor
+class SetRange : CommandExecutor
 {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {

@@ -16,15 +16,13 @@ class Explosion : Ability
             null ->
             {
                 player.world.createExplosion(
-                    //Current position + direction * range
-                    player.location.add(player.location.direction.multiply(EmpireWand.range))
-                    , 5f, false)
+                    //Current position + direction * range + (0,1,0) #To make explosions feel better
+                    player.location.add(player.location.direction.multiply(EmpireWand.range)).add(0.0,1.0,0.0)
+                    , EmpireWand.explosionPower, false)
             }
 
-            else -> player.world.createExplosion(closestBlock.location, 5f, false)
+            else -> player.world.createExplosion(closestBlock.location.add(0.0,1.0,0.0), 5f, false)
         }
-
-        player.sendMessage("BOOOOOM!")
     }
 
 }
