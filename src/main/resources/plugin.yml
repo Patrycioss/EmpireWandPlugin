@@ -5,6 +5,11 @@ version: '${project.version}'
 main: me.patrycioss.empirewand.EmpireWand
 api-version: 1.19
 commands:
+  empirewand:
+    description: Gives the player an empire wand
+    aliases: [ew, ewand]
+    usage: "Usage: /<empirewand> [target]"
+
   setrange:
     description: Set the range of your wand
     usage: "Usage: /<setrange> [value]"
