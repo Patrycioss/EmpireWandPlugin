@@ -10,8 +10,39 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.inventory.ItemStack
 
-class EmpireWand : CommandExecutor
+class EmpireWandCommand : CommandExecutor
 {
+    companion object
+    {
+        val displayName = createDisplayName()
+        val empireWandItem = createEmpireWandItem()
+
+
+
+        private fun createEmpireWandItem() : ItemStack
+        {
+            val empireWand = ItemStack(Material.BLAZE_ROD,1)
+            val itemMeta = empireWand.itemMeta
+
+            itemMeta.displayName(displayName.asComponent())
+
+            empireWand.itemMeta = itemMeta
+            return empireWand
+        }
+
+        private fun createDisplayName() : Component
+        {
+            val empireWandName : Component = Component.text("")
+                .color(TextColor.color(0x8b0000))
+                .decoration(TextDecoration.BOLD, true)
+                .append(Component.text("Empire Wand"))
+
+            return empireWandName.asComponent()
+        }
+    }
+
+
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {
         if (args.count() == 1)
@@ -28,18 +59,7 @@ class EmpireWand : CommandExecutor
                 {
                     if (target.isOnline)
                     {
-                        val empireWand = ItemStack(Material.BLAZE_ROD,1)
-                        val empireWandMeta = empireWand.itemMeta
-
-                        val empireWandName : Component = Component.text("Empire Wand")
-                        empireWandName.color(TextColor.color(0x8b0000))
-                        empireWandName.decoration(TextDecoration.BOLD)
-
-                        empireWandMeta.displayName(empireWandName)
-
-                        Bukkit.getServer().logger.info(empireWand.itemMeta.displayName().toString())
-
-                        target.inventory.addItem(empireWand)
+                        target.inventory.addItem(empireWandItem)
                         return true
                     }
                     else
