@@ -1,5 +1,6 @@
 package me.patrycioss.empirewand.commands
 
+import me.patrycioss.empirewand.MessageGenerator
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -10,6 +11,9 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+
+
+
 
 class EmpireWandCommand : CommandExecutor
 {
@@ -64,7 +68,7 @@ class EmpireWandCommand : CommandExecutor
 
             if (player == null)
             {
-                sender.sendMessage(Component.text("").color(TextColor.color(0x8b0000))  .append(Component.text("Invalid Target!")))
+                sender.sendMessage(MessageGenerator.generateWarningMessage("Invalid Target!"))
                 return false
             }
             else target = player
@@ -79,7 +83,7 @@ class EmpireWandCommand : CommandExecutor
 
         else
         {
-            sender.sendMessage("Player is not online at the moment!")
+            sender.sendMessage(MessageGenerator.generateWarningMessage("Player is not online at the moment!"))
             return false
         }
     }

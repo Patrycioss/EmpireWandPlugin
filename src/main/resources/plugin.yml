@@ -7,15 +7,18 @@ api-version: 1.19
 commands:
   empirewand:
     description: Gives the player an empire wand
+    usage: /empirewand [target player]
     aliases: [ew, ewand]
 
-  setrange:
+  setempirewandrange:
     description: Set the range of your wand
-    usage: "Usage: /<setrange> [value]"
+    usage: /setempirewandrange [range]
+    aliases: [erange, ewandrange]
 
-  setexplosionpower:
+  setempirewandexplosionpower:
     description: Set the power of explosions caused by the wand
-    usage: "Usage: /<setexplosionpower> [value]"
+    usage: /setempirewandexplosionpower [explosionpower]
+    aliases: [ewandexplosionpower, ewexplosionpower, ewplopower, ewexplopower]
 
 permissions:
   EmpireWand.setrange:

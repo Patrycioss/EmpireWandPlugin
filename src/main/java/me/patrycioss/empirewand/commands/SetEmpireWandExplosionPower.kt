@@ -1,16 +1,13 @@
 package me.patrycioss.empirewand.commands
 
 import me.patrycioss.empirewand.EmpireWand
+import me.patrycioss.empirewand.MessageGenerator
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-
-/**
- * Command to set the range of the users' empire wand
- */
-class SetRange : CommandExecutor
+class SetEmpireWandExplosionPower : CommandExecutor
 {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {
@@ -18,26 +15,26 @@ class SetRange : CommandExecutor
         {
             if (args.count() == 1)
             {
-                val newRange : Int
+                val newPower : Float
                 try
                 {
-                    newRange = args[0].toInt()
+                    newPower = args[0].toFloat()
                 }
                 catch (e : NumberFormatException)
                 {
-                    sender.sendMessage("Value can only be a whole number in range 1-120!")
+                    sender.sendMessage(MessageGenerator.generateWarningMessage("Value has to be a decimal or whole number higher or equal to zero"))
                     return false
                 }
 
-                return if (args[0].toInt() !in 1..120)
+                return if (args[0].toFloat() < 0)
                 {
-                    sender.sendMessage("Value can only be from 1-120!")
+                    sender.sendMessage(MessageGenerator.generateWarningMessage("Value has to be a decimal or whole number higher or equal to zero"))
                     false
                 }
                 else
                 {
-                    sender.sendMessage("Set value to $newRange")
-                    EmpireWand.range = newRange
+                    EmpireWand.explosionPower = newPower
+                    sender.sendMessage(MessageGenerator.generateConfirmationMessage("Set explosion power to $newPower"))
                     true
                 }
             }
