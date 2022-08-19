@@ -8,6 +8,7 @@ import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 class EmpireWandCommand : CommandExecutor
@@ -45,31 +46,41 @@ class EmpireWandCommand : CommandExecutor
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean
     {
-        if (args.count() == 1)
-        {
-            when (val target = Bukkit.getPlayer(args[0]))
-            {
-                null ->
-                {
-                    sender.sendMessage("Invalid target name")
-                    return false
-                }
+        val target: Player
 
-                else ->
-                {
-                    if (target.isOnline)
-                    {
-                        target.inventory.addItem(empireWandItem)
-                        return true
-                    }
-                    else
-                    {
-                        sender.sendMessage("Player is not online at the moment!")
-                        return false
-                    }
-                }
-            }
+        //Set target to sender if no target given
+        if (args.isEmpty())
+        {
+            if (sender is Player)
+                target = sender
+
+            else return false
         }
-        else return false
+
+        //else make sure target is valid
+        else
+        {
+            val player = Bukkit.getPlayer(args[0])
+
+            if (player == null)
+            {
+                sender.sendMessage(Component.text("").color(TextColor.color(0x8b0000))  .append(Component.text("Invalid Target!")))
+                return false
+            }
+            else target = player
+        }
+
+        //Make sure target is online
+        if (target.isOnline)
+        {
+            target.inventory.addItem(empireWandItem)
+            return true
+        }
+
+        else
+        {
+            sender.sendMessage("Player is not online at the moment!")
+            return false
+        }
     }
 }

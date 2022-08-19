@@ -8,7 +8,6 @@ commands:
   empirewand:
     description: Gives the player an empire wand
     aliases: [ew, ewand]
-    usage: "Usage: /<empirewand> [target]"
 
   setrange:
     description: Set the range of your wand
