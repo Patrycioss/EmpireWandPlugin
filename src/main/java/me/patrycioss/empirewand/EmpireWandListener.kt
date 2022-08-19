@@ -8,8 +8,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.inventory.PlayerInventory
 import java.util.*
 import java.util.logging.Logger
 
@@ -18,7 +22,8 @@ class EmpireWandListener(private val empireWand: EmpireWand) : Listener
 {
     private val logger: Logger = Bukkit.getLogger()
 
-    val playerDropItemOnTick = mutableListOf<UUID>()
+    private val playerDropItemOnTick = mutableListOf<UUID>()
+    private val playerInventoryOpen = hashMapOf<UUID,Boolean>()
 
     init
     {
@@ -31,6 +36,32 @@ class EmpireWandListener(private val empireWand: EmpireWand) : Listener
     fun onItemDrop(dropItemEvent: PlayerDropItemEvent)
     {
         registerItemDropper(dropItemEvent.player)
+    }
+
+    @EventHandler
+    fun onInventoryOpen(openInventoryEvent: InventoryOpenEvent)
+    {
+        logger.info("haa")
+        if (openInventoryEvent.inventory is PlayerInventory)
+        {
+            Bukkit.getServer().logger.info("ha")
+            playerInventoryOpen[openInventoryEvent.viewers[0].uniqueId] = true
+        }
+    }
+
+    @EventHandler
+    fun onInventoryClose(closeInventoryEvent: InventoryCloseEvent)
+    {
+        if (closeInventoryEvent.inventory is PlayerInventory)
+        {
+            playerInventoryOpen.remove(closeInventoryEvent.viewers[0].uniqueId)
+        }
+    }
+
+    @EventHandler
+    fun onPlayerQuit(playerQuitEvent: PlayerQuitEvent)
+    {
+        playerInventoryOpen.remove(playerQuitEvent.player.uniqueId)
     }
 
 
@@ -58,6 +89,9 @@ class EmpireWandListener(private val empireWand: EmpireWand) : Listener
     {
         //Make sure the ability doesn't trigger because of dropping items
         if (playerDropItemOnTick.contains(playerInteractEvent.player.uniqueId)) return
+
+        //Make sure wand can't be used when player inventory is opens
+        if (playerInventoryOpen[playerInteractEvent.player.uniqueId] == true) return
 
 
         if (playerInteractEvent.hasItem() && playerInteractEvent.item!!.type == Material.BLAZE_ROD)

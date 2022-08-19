@@ -5,8 +5,15 @@ import org.bukkit.event.player.PlayerInteractEvent
 
 class FireBall : Ability
 {
+    private val server = Bukkit.getServer()
+
+
     override fun activate(playerInteractEvent: PlayerInteractEvent)
     {
-        Bukkit.getServer().logger.info("[EmpireWand] Using fireball")
+        server.logger.info("[EmpireWand] Using fireball")
+
+
+
+
     }
 }
